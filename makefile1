@@ -1,0 +1,31 @@
+PROJECT := TestProj
+TopDir	:= $(shell pwd)
+OutDir	:= Build
+
+objs 	:= main.o C_Test.o Cpp_Test.o Fpt_Test.o
+
+VPATH := $(TopDir) $(TopDir)/$(OutDir)
+.SUFFIXES: .a
+
+.PHONY: all createdir clean
+
+all: createdir $(OutDir)/$(PROJECT).a 
+
+createdir: 
+	[ -d $(OutDir) ] || echo '  MD      $(OutDir)' &&	mkdir -p $(OutDir)
+
+%.o:%.c
+	gcc -c $< -o $@
+	
+%.o:%.cpp
+	gcc -c $< -o $@
+
+$(OutDir)/$(PROJECT).a: $(objs) makefile1
+	gcc $(objs) -lstdc++ -o $@
+	chmod +x $@
+
+clean: 
+	-rm -rf $(OutDir)
+	-rm *.o
+	echo "Deleted dir : $(OutDir) and obj files"
+
