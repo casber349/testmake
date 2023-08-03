@@ -1,0 +1,42 @@
+PROJECT := TestProj
+TopDir	:= $(shell pwd)
+OutDir	:= Build
+
+objs 	:= main.o C_Test.o Cpp_Test.o Fpt_Test.o
+
+VPATH := $(TopDir) $(TopDir)/$(OutDir)
+.SUFFIXES: .a
+
+.PHONY: all createdir clean
+
+all: createdir $(OutDir)/$(PROJECT).a 
+
+# notice this should be after target "all".
+# this is because we want "all" be our default (1st) target.
+deplist := $(wildcard *.d)
+ifneq ($(deplist),)
+-include $(deplist)
+endif
+
+createdir: 
+	[ -d $(OutDir) ] || echo '  MD      $(OutDir)' &&	mkdir -p $(OutDir)
+
+# About the option "-MMD -MF $@.d" when invoking gcc : 
+#   not only compile but also let CPP create dependence file *.o.d to 
+#   describe user header files included so that we can make it our dependence also.
+
+%.o:%.c
+	gcc -c $< -o $@ -MMD -MF $@.d
+	
+%.o:%.cpp
+	gcc -c $< -o $@ -MMD -MF $@.d
+
+$(OutDir)/$(PROJECT).a: $(objs) makefile1
+	gcc $(objs) -lstdc++ -o $@
+	chmod +x $@
+
+clean: 
+	-rm -rf $(OutDir)
+	-rm *.o *.d
+	echo "Deleted dir : $(OutDir) and obj files"
+
