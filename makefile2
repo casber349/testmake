@@ -5,11 +5,11 @@ OutDir	:= Build
 objs 	:= main.o C_Test.o Cpp_Test.o Fpt_Test.o
 
 VPATH := $(TopDir) $(TopDir)/$(OutDir)
-.SUFFIXES: .a
+.SUFFIXES: .a .txt .inf
 
 .PHONY: all createdir clean
 
-all: createdir $(OutDir)/$(PROJECT).a 
+all: createdir $(OutDir)/$(PROJECT).a $(OutDir)/$(PROJECT).txt $(OutDir)/$(PROJECT).inf
 
 # notice this should be after target "all".
 # this is because we want "all" be our default (1st) target.
@@ -26,17 +26,23 @@ createdir:
 #   describe user header files included so that we can make it our dependence also.
 
 %.o:%.c
-	gcc -c $< -o $@ -MMD -MF $@.d
+	gcc -c $< -g -o $@ -MMD -MF $@.d
 	
 %.o:%.cpp
-	gcc -c $< -o $@ -MMD -MF $@.d
+	gcc -c $< -g -o $@ -MMD -MF $@.d
 
 $(OutDir)/$(PROJECT).a: $(objs) makefile1
 	gcc $(objs) -lstdc++ -o $@
 	chmod +x $@
 
+%.inf:%.a
+	readelf -a $< > $*.inf
+
+%.txt:%.a
+	objdump -x -S $< > $*.txt
+	
 clean: 
 	-rm -rf $(OutDir)
-	-rm *.o *.d
+	-rm *.o *.d *.inf *.txt
 	echo "Deleted dir : $(OutDir) and obj files"
 
