@@ -8,8 +8,10 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "c:/tempc/test/testmake/Build/TestProj.exe",
-            "args": [],
+            "windows":{
+                "program": "c:/tempc/test/testmake/Build/TestProj.exe",
+                "args": [],
+            },
             "stopAtEntry": true,
             "cwd": "${fileDirname}",
             "environment": [],
