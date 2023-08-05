@@ -4,7 +4,7 @@ OutDir	:= Build
 
 ifeq ($(OS),Windows_NT)     # is Windows_NT on XP, 2000, 7, Vista, 10...
     Detected_OS := Windows
-	Exec_Ext := exe
+	Exec_Ext := .exe
 else
     Detected_OS := $(shell uname)  # same as "uname -s"
 	Exec_Ext :=
@@ -17,7 +17,7 @@ VPATH := $(TopDir) $(TopDir)/$(OutDir)
 
 .PHONY: all createdir clean
 
-all: detectos createdir $(OutDir)/$(PROJECT).$(Exec_Ext) $(OutDir)/$(PROJECT).txt
+all: detectos createdir $(OutDir)/$(PROJECT)$(Exec_Ext) $(OutDir)/$(PROJECT).txt
 
 ifneq ($(Detected_OS),Windows)
 all: $(OutDir)/$(PROJECT).inf
@@ -46,18 +46,18 @@ createdir:
 %.o:%.cpp
 	gcc -c $< -g -o $@ -MMD -MF $@.d
 
-$(OutDir)/$(PROJECT).$(Exec_Ext): $(objs) makefile1
+$(OutDir)/$(PROJECT)$(Exec_Ext): $(objs) makefile
 	gcc $(objs) -lstdc++ -o $@
 	chmod +x $@
 
-%.inf:%.$(Exec_Ext)
+%.inf:%$(Exec_Ext)
 	readelf -a $< > $*.inf
 
-%.txt:%.$(Exec_Ext)
+%.txt:%$(Exec_Ext)
 	objdump -x -S $< > $*.txt
 	
 clean: 
 	-rm -rf $(OutDir)
-	-rm *.o *.d *.inf *.txt
+	-rm *.o *.d
 	echo "Deleted dir : $(OutDir) and obj files"
 
