@@ -20,9 +20,11 @@
 
 int main(int argc, char **argv)
 {
-	if (argc >= 1){
-		printf("this program got %d arguments, argv[0]=%s, argv[1]=%s\n", argc, argv[0], argv[1]);
+	printf("this program got %d arguments, argv[0]=%s", argc, argv[0]); 
+	if (argc > 1){
+		printf(", argv[1]=%s", argv[1]);
 	}
+	printf("\n");
 	
 	// try allocate memory by c-lib
 	BasicTest_C_Test();
