@@ -17,7 +17,7 @@ VPATH := $(TopDir) $(TopDir)/$(OutDir)
 
 .PHONY: all createdir clean
 
-all: detectos createdir $(OutDir)/$(PROJECT).exe $(OutDir)/$(PROJECT).txt $(OutDir)/$(PROJECT).inf
+all: detectos createdir $(OutDir)/$(PROJECT).$(Exec_Ext) $(OutDir)/$(PROJECT).txt $(OutDir)/$(PROJECT).inf
 
 # notice this should be after target "all".
 # this is because we want "all" be our default (1st) target.
