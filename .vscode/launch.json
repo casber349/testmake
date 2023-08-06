@@ -9,15 +9,20 @@
             "type": "cppdbg",
             "request": "launch",
             "windows":{
-                "program": "c:/tempc/test/testmake/Build/TestProj.exe",
+                "program": "${workspaceFolder}/Build/TestProj.exe",
                 "args": [],
+                "miDebuggerPath": "C:/msys64/mingw64/bin/gdb.exe",
+            },
+            "linux":{
+                "program": "${workspaceFolder}/Build/TestProj",
+                "args": [],
+                "miDebuggerPath": "gdb",
             },
             "stopAtEntry": true,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:/msys64/mingw64/bin/gdb.exe",
         }
 
     ]

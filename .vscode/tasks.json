@@ -9,9 +9,11 @@
             "windows":{
                 "command": "c:/msys64/mingw64.exe",
                 "args": [
-                    "make",
-                    "--directory=${workspaceFolder} "
+                    "make --directory=${workspaceFolder}"
                 ],
+            },
+            "linux":{
+                "command": "make",
             },
             "group":  {
                 "kind": "build",
@@ -20,7 +22,7 @@
             "presentation": {
                 "reveal":"always"
             },
-            //"problemMatcher": "$msCompile"
+            "problemMatcher": "$gcc"
         },
         {
             "label": "make (clean all)",
@@ -28,10 +30,11 @@
             "windows":{
                 "command": "c:/msys64/mingw64.exe",
                 "args": [
-                    "make",
-                    "--directory=${workspaceFolder} ",
-                    "clean"
+                    "make --directory=${workspaceFolder} clean"
                 ],
+            },
+            "linux":{
+                "command": "make clean",
             },
             "group":  {
                 "kind": "build",
@@ -40,7 +43,7 @@
             "presentation": {
                 "reveal":"always"
             },
-            //"problemMatcher": "$msCompile"
+            "problemMatcher": "$gcc"
         }
     ]
 }
