@@ -15,3 +15,12 @@ jobs:
     - uses: actions/checkout@v3
     - name: make
       run: make
+      
+    - uses: actions/download-artifact@v3
+      with:
+        name: C/C++ CI
+        path: ~/Downloads/GithubActionArtifact
+        
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: ~/Downloads/GithubActionArtifact
